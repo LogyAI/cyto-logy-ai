@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Connecting to VPN Server...</title>
+  <title>Cytology AI - Connecting...</title>
   <style>
     * {
       margin: 0;
@@ -109,7 +109,7 @@
 </head>
 <body>
   <div class="container">
-    <div class="logo">VPN Server Access</div>
+    <div class="logo">Advanced AI Powered Cytology Tool</div>
     <div id="status">
       <span class="status-dot"></span>
       Checking VPN server...
@@ -130,60 +130,37 @@
   <script>
     const targetUrl = "http://10.5.140.19/";
 
-    async function isSiteOnline(url) {
-      try {
-        // Try to fetch a small resource or favicon to test connectivity
-        const testUrl = url ;
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
-        
-        const response = await fetch(testUrl, { 
-          method: 'HEAD',
-          signal: controller.signal,
-          cache: 'no-cache'
-        });
-        
-        clearTimeout(timeoutId);
-        return response.ok || response.status === 404; // 404 is also a valid response indicating server is up
-      } catch (error) {
-        // If fetch fails (network error, timeout, etc.), site is considered offline
-        return false;
-      }
-    }
-
     function showVpnInstructions() {
       document.getElementById("status").innerHTML = 
-        '<span class="status-dot" style="background: #dc3545;"></span>VPN Connection Required';
+        '<span class="status-dot" style="background: #ffc107;"></span>VPN Connection Required';
       document.getElementById("progressBar").style.width = "0%";
       document.getElementById("progressText").innerText = "Please connect to VPN";
       document.getElementById("spinner").style.display = "none";
       
       document.querySelector(".info").innerHTML = 
         '<strong>VPN Connection Required</strong><br><br>' +
-        'The server at <code>10.5.140.19</code> is not accessible.<br><br>' +
-        'Please connect to the VPN using <strong>Accops HySecure client</strong> and refresh this page.';
-    }
-
-    // Initial check
-    (async () => {
-      document.getElementById("status").innerHTML = 
-        '<span class="status-dot"></span>Checking VPN server...';
+        'Please connect to the VPN using <strong>Accops HySecure client</strong><br><br>' +
+        '<button id="confirmBtn" style="background: #667eea; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 10px;">Click here to confirm Accops VPN connection</button>';
       
-      const online = await isSiteOnline(targetUrl);
-      if (online) {
+      document.getElementById("confirmBtn").onclick = function() {
+        document.getElementById("confirmBtn").disabled = true;
+        document.getElementById("confirmBtn").innerText = "Redirecting...";
+        document.getElementById("confirmBtn").style.background = "#6c757d";
+        document.getElementById("confirmBtn").style.cursor = "not-allowed";
+        
         document.getElementById("status").innerHTML = 
-          '<span class="status-dot" style="background: #28a745;"></span>Server accessible! Redirecting...';
+          '<span class="status-dot" style="background: #28a745;"></span>Redirecting to server...';
         document.getElementById("progressBar").style.width = "100%";
-        document.getElementById("progressText").innerText = "Redirecting...";
-        document.getElementById("spinner").style.display = "none";
+        document.getElementById("progressText").innerText = "Opening server...";
         
         setTimeout(() => {
           window.location.href = targetUrl;
         }, 1000);
-      } else {
-        showVpnInstructions();
-      }
-    })();
+      };
+    }
+
+    // Show VPN instructions immediately
+    showVpnInstructions();
   </script>
 </body>
 </html>
