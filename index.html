@@ -12,70 +12,109 @@
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 25%, #0f766e 75%, #065f46 100%);
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #333;
+      color: #1f2937;
+      font-weight: 400;
     }
 
     .container {
-      background: white;
-      padding: 3rem 2rem;
-      border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 3rem 2.5rem;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.1);
       text-align: center;
-      max-width: 500px;
+      max-width: 520px;
       width: 90%;
+      animation: containerSlideIn 0.6s ease-out;
+    }
+    
+    @keyframes containerSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .logo {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: #667eea;
+      font-size: 2rem;
+      font-weight: 600;
+      color: #0f766e;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    
+    .icon {
+      font-size: 3rem;
       margin-bottom: 1rem;
+      opacity: 0.9;
+      animation: iconFloat 3s ease-in-out infinite;
+    }
+    
+    @keyframes iconFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    
+    .subtitle {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #6b7280;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     #status {
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       margin-bottom: 2rem;
-      color: #555;
+      color: #374151;
       font-weight: 500;
     }
 
     .progress-container {
-      background: #f0f0f0;
-      border-radius: 25px;
+      background: #e5e7eb;
+      border-radius: 12px;
       overflow: hidden;
       margin-bottom: 1.5rem;
       position: relative;
-      height: 12px;
+      height: 8px;
     }
 
     .progress-bar {
       height: 100%;
-      background: linear-gradient(90deg, #667eea, #764ba2);
-      border-radius: 25px;
-      transition: width 0.3s ease;
+      background: linear-gradient(90deg, #0f766e, #059669);
+      border-radius: 12px;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       width: 0%;
     }
 
     .progress-text {
-      font-size: 0.9rem;
-      color: #666;
+      font-size: 0.875rem;
+      color: #6b7280;
       margin-top: 0.5rem;
+      font-weight: 500;
     }
 
     .spinner {
-      width: 40px;
-      height: 40px;
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #667eea;
+      width: 32px;
+      height: 32px;
+      border: 3px solid #e5e7eb;
+      border-top: 3px solid #0f766e;
       border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 1rem auto;
+      animation: spin 0.8s linear infinite;
+      margin: 1.5rem auto;
     }
 
     @keyframes spin {
@@ -85,9 +124,13 @@
 
     .info {
       font-size: 0.9rem;
-      color: #888;
+      color: #6b7280;
       margin-top: 1.5rem;
-      line-height: 1.4;
+      line-height: 1.5;
+      padding: 1.5rem;
+      background: rgba(243, 244, 246, 0.5);
+      border-radius: 16px;
+      border: 1px solid rgba(229, 231, 235, 0.8);
     }
 
     .status-dot {
@@ -105,11 +148,45 @@
       50% { opacity: 0.5; }
       100% { opacity: 1; }
     }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #0f766e 0%, #059669 100%);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.25);
+      letter-spacing: 0.025em;
+    }
+    
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0d9488 0%, #10b981 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.35);
+    }
+    
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+    
+    .btn-primary:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: 0 2px 8px rgba(156, 163, 175, 0.2);
+    }
   </style>
 </head>
 <body>
   <div class="container">
+    <div class="icon">🔬</div>
     <div class="logo">Advanced AI Powered Cytology Tool</div>
+    <div class="subtitle">Secure Medical Platform Access</div>
     <div id="status">
       <span class="status-dot"></span>
       Checking VPN server...
@@ -123,7 +200,7 @@
     <div class="spinner" id="spinner"></div>
     
     <div class="info">
-      Checking if VPN server is accessible...
+      Initializing secure medical platform access...
     </div>
   </div>
 
@@ -132,26 +209,24 @@
 
     function showVpnInstructions() {
       document.getElementById("status").innerHTML = 
-        '<span class="status-dot" style="background: #ffc107;"></span>VPN Connection Required';
+        '<span class="status-dot" style="background: #f59e0b;"></span>Secure Access Required';
       document.getElementById("progressBar").style.width = "0%";
-      document.getElementById("progressText").innerText = "Please connect to VPN";
+      document.getElementById("progressText").innerText = "Establishing secure connection";
       document.getElementById("spinner").style.display = "none";
       
       document.querySelector(".info").innerHTML = 
-        '<strong>VPN Connection Required</strong><br><br>' +
-        'Please connect to the VPN using <strong>Accops HySecure client</strong><br><br>' +
-        '<button id="confirmBtn" style="background: #667eea; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; cursor: pointer; margin-top: 10px;">Click here to confirm Accops VPN connection</button>';
+        '<strong>Secure Network Access Required</strong><br><br>' +
+        'Please establish VPN connection using <strong>Accops HySecure client</strong> to access the medical platform.<br><br>' +
+        '<button id="confirmBtn" class="btn-primary">Click here to Confirm VPN Connection</button>';
       
       document.getElementById("confirmBtn").onclick = function() {
         document.getElementById("confirmBtn").disabled = true;
         document.getElementById("confirmBtn").innerText = "Redirecting...";
-        document.getElementById("confirmBtn").style.background = "#6c757d";
-        document.getElementById("confirmBtn").style.cursor = "not-allowed";
         
         document.getElementById("status").innerHTML = 
-          '<span class="status-dot" style="background: #28a745;"></span>Redirecting to server...';
+          '<span class="status-dot" style="background: #059669;"></span>Accessing Medical Platform...';
         document.getElementById("progressBar").style.width = "100%";
-        document.getElementById("progressText").innerText = "Opening server...";
+        document.getElementById("progressText").innerText = "Secure connection established";
         
         setTimeout(() => {
           window.location.href = targetUrl;
