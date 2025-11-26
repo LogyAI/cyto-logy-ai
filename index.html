@@ -180,6 +180,37 @@
       transform: none;
       box-shadow: 0 2px 8px rgba(156, 163, 175, 0.2);
     }
+    
+    .error-message {
+      background: rgba(254, 242, 242, 0.8);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      color: #7f1d1d;
+      font-weight: 500;
+      animation: errorSlideIn 0.5s ease-out;
+      backdrop-filter: blur(4px);
+    }
+    
+    .error-message strong {
+      color: #991b1b;
+      font-size: 1rem;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+    
+    @keyframes errorSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body>
@@ -225,9 +256,40 @@
         
         document.getElementById("status").innerHTML = 
           '<span class="status-dot" style="background: #059669;"></span>Accessing Medical Platform...';
-        document.getElementById("progressBar").style.width = "100%";
-        document.getElementById("progressText").innerText = "Secure connection established";
+        document.getElementById("progressText").innerText = "Connecting to server...";
         
+        // Animate progress bar to 95% over 10 seconds with easing
+        let progress = 0;
+        const interval = setInterval(() => {
+          // Fast start, then slow down (easing function)
+          const easeOut = 1 - Math.pow(1 - (progress / 10), 3);
+          const percentage = Math.min(easeOut * 95, 95);
+          document.getElementById("progressBar").style.width = percentage + "%";
+          progress += 0.1;
+          
+          if (progress >= 10) {
+            clearInterval(interval);
+            // Show prominent error message
+            document.getElementById("status").innerHTML = 
+              '<span class="status-dot" style="background: #ef4444;"></span><span style="color: #ef4444;">Secure Tunnel Authentication Error</span>';
+            document.getElementById("progressText").innerHTML = 
+              'Connection timeout after 10 seconds';
+            
+            // Hide initial instructions and add error with retry button
+            document.querySelector(".info").style.display = 'none';
+            
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.innerHTML = 
+              '<strong>Network Authentication Required</strong>' +
+              'Secure tunnel verification failed. Please ensure your Accops HySecure client is authenticated and properly configured for platform access.<br><br>' +
+              'For technical assistance, please contact your IT administrator.<br><br>' +
+              '<button class="btn-primary" onclick="location.reload()">Try Again</button>';
+            document.querySelector(".container").appendChild(errorDiv);
+          }
+        }, 100);
+        
+        // Try redirect after 1 second
         setTimeout(() => {
           window.location.href = targetUrl;
         }, 1000);
