@@ -217,7 +217,7 @@
   <div class="container">
     <div class="icon">🔬</div>
     <div class="logo">Advanced AI Powered Cytology Tool</div>
-    <div class="subtitle">Secure Medical Platform Access</div>
+    <div class="subtitle">Secure Platform Access</div>
     <div id="status">
       <span class="status-dot"></span>
       Checking VPN server...
@@ -231,7 +231,7 @@
     <div class="spinner" id="spinner"></div>
     
     <div class="info">
-      Initializing secure medical platform access...
+      Initializing secure platform access...
     </div>
   </div>
 
@@ -247,7 +247,7 @@
       
       document.querySelector(".info").innerHTML = 
         '<strong>Secure Network Access Required</strong><br><br>' +
-        'Please establish VPN connection using <strong>Accops HySecure client</strong> to access the medical platform.<br><br>' +
+        'Please establish VPN connection using <strong>Accops HySecure client</strong> to access the platform.<br><br>' +
         '<button id="confirmBtn" class="btn-primary">Click here to Confirm VPN Connection</button>';
       
       document.getElementById("confirmBtn").onclick = function() {
@@ -255,7 +255,7 @@
         document.getElementById("confirmBtn").innerText = "Redirecting...";
         
         document.getElementById("status").innerHTML = 
-          '<span class="status-dot" style="background: #059669;"></span>Accessing Medical Platform...';
+          '<span class="status-dot" style="background: #059669;"></span>Accessing Platform...';
         document.getElementById("progressText").innerText = "Connecting to server...";
         
         // Animate progress bar to 95% over 10 seconds with easing
