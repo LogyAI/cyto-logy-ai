@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Starting cyto.logy.ai...</title>
+  <title>Connecting to VPN Server...</title>
   <style>
     * {
       margin: 0;
@@ -109,10 +109,10 @@
 </head>
 <body>
   <div class="container">
-    <div class="logo">cyto.logy.ai</div>
+    <div class="logo">VPN Server Access</div>
     <div id="status">
       <span class="status-dot"></span>
-      Checking server status...
+      Checking VPN server...
     </div>
     
     <div class="progress-container">
@@ -123,32 +123,12 @@
     <div class="spinner" id="spinner"></div>
     
     <div class="info">
-      Please wait while we start up the server. This may take up to 2 minutes.
+      Checking if VPN server is accessible...
     </div>
   </div>
 
   <script>
-    const instanceUrl = "https://qecietn55i.execute-api.us-east-1.amazonaws.com/default/logy_internal_dev_scheduler";
-    const targetUrl = "https://cyto.logy.ai";
-    const maxWaitTime = 120; // seconds
-    let remainingTime = maxWaitTime;
-    let progressInterval;
-
-    function updateProgress() {
-      const elapsed = maxWaitTime - remainingTime;
-      const progressPercent = (elapsed / maxWaitTime) * 100;
-      
-      document.getElementById("progressBar").style.width = progressPercent + "%";
-      document.getElementById("progressText").innerText = 
-        `${Math.round(progressPercent)}% complete (${remainingTime}s remaining)`;
-      
-      remainingTime--;
-      
-      if (remainingTime < 0) {
-        clearInterval(progressInterval);
-        document.getElementById("progressText").innerText = "Timeout reached";
-      }
-    }
+    const targetUrl = "http://10.5.140.19/";
 
     async function isSiteOnline(url) {
       try {
@@ -171,44 +151,37 @@
       }
     }
 
-    async function startInstanceAndWait() {
+    function showVpnInstructions() {
       document.getElementById("status").innerHTML = 
-        '<span class="status-dot"></span>Waking up cyto.logy.ai server...';
+        '<span class="status-dot" style="background: #dc3545;"></span>VPN Connection Required';
+      document.getElementById("progressBar").style.width = "0%";
+      document.getElementById("progressText").innerText = "Please connect to VPN";
+      document.getElementById("spinner").style.display = "none";
       
-      // Start instance in background
-      fetch(instanceUrl, { mode: 'no-cors' }).catch(() => {});
-
-      // Start progress bar
-      progressInterval = setInterval(updateProgress, 1000);
-
-      // Keep checking every 5 seconds
-      const pollInterval = setInterval(async () => {
-        const online = await isSiteOnline(targetUrl);
-        if (online) {
-          clearInterval(progressInterval);
-          clearInterval(pollInterval);
-          
-          // Complete the progress bar
-          document.getElementById("progressBar").style.width = "100%";
-          document.getElementById("progressText").innerText = "Complete! Redirecting...";
-          document.getElementById("status").innerHTML = 
-            '<span class="status-dot" style="background: #28a745;"></span>Server is online!';
-          document.getElementById("spinner").style.display = "none";
-          
-          setTimeout(() => {
-            window.location.href = targetUrl;
-          }, 1000);
-        }
-      }, 5000);
+      document.querySelector(".info").innerHTML = 
+        '<strong>VPN Connection Required</strong><br><br>' +
+        'The server at <code>10.5.140.19</code> is not accessible.<br><br>' +
+        'Please connect to the VPN using <strong>Accops HySecure client</strong> and refresh this page.';
     }
 
     // Initial check
     (async () => {
+      document.getElementById("status").innerHTML = 
+        '<span class="status-dot"></span>Checking VPN server...';
+      
       const online = await isSiteOnline(targetUrl);
       if (online) {
-        window.location.href = targetUrl;
+        document.getElementById("status").innerHTML = 
+          '<span class="status-dot" style="background: #28a745;"></span>Server accessible! Redirecting...';
+        document.getElementById("progressBar").style.width = "100%";
+        document.getElementById("progressText").innerText = "Redirecting...";
+        document.getElementById("spinner").style.display = "none";
+        
+        setTimeout(() => {
+          window.location.href = targetUrl;
+        }, 1000);
       } else {
-        startInstanceAndWait();
+        showVpnInstructions();
       }
     })();
   </script>
